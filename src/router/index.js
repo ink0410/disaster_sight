@@ -83,7 +83,7 @@ export const constantRoutes = [
       }
     ]
   },
-  /* {
+   {
     path: '/documentation',
     component: Layout,
     children: [
@@ -107,7 +107,7 @@ export const constantRoutes = [
         meta: { title: 'guide', icon: 'guide', noCache: true }
       }
     ]
-  },*/
+  },
   {
     path: '/profile',
     component: Layout,
@@ -129,7 +129,7 @@ export const constantRoutes = [
  * the routes that need to be dynamically loaded based on user roles
  */
 export const asyncRoutes = [
-  /* {
+   {
     path: '/permission',
     component: Layout,
     redirect: '/permission/page',
@@ -182,13 +182,13 @@ export const asyncRoutes = [
         meta: { title: 'icons', icon: 'icon', noCache: true }
       }
     ]
-  },*/
+  },
 
   /** when your routing map is too long, you can split it into small modules **/
-  /* componentsRouter,
+  componentsRouter,
   chartsRouter,
   nestedRouter,
-  tableRouter,*/
+  tableRouter,
   /*
   {
     path: '/example',
@@ -357,7 +357,20 @@ export const asyncRoutes = [
         meta: { title: 'theme', icon: 'theme' }
       }
     ]
-  },*/
+  },
+
+  {
+    path: '/volunteer',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/volunteer/index'),
+        name: '志愿者首页',
+        meta: { title: 'volunteer' }
+      }
+    ]
+  },
 
   {
     path: '/videoload',
