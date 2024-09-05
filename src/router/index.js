@@ -189,7 +189,7 @@ export const asyncRoutes = [
   chartsRouter,
   nestedRouter,
   tableRouter,
-  /*
+
   {
     path: '/example',
     component: Layout,
@@ -449,7 +449,7 @@ export const asyncRoutes = [
     ]
   },
 
-  /* {
+   {
     path: '/clipboard',
     component: Layout,
     children: [
@@ -484,7 +484,7 @@ export const asyncRoutes = [
         meta: { title: 'externalLink', icon: 'link' }
       }
     ]
-  },*/
+  },
 
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
