@@ -108,6 +108,7 @@ export const constantRoutes = [
       }
     ]
   },
+  },
   {
     path: '/profile',
     component: Layout,
@@ -183,11 +184,15 @@ export const asyncRoutes = [
       }
     ]
   },
+  },
 
   /** when your routing map is too long, you can split it into small modules **/
   componentsRouter,
+  componentsRouter,
   chartsRouter,
   nestedRouter,
+  tableRouter,
+
   tableRouter,
 
   {
@@ -483,6 +488,7 @@ export const asyncRoutes = [
         meta: { title: 'externalLink', icon: 'link' }
       }
     ]
+  },
   },
 
   // 404 page must be placed at the end !!!
