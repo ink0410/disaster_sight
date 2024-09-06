@@ -5,48 +5,66 @@
       <!-- 左半部分：视频播放画布 -->
       <el-col :span="15">
         <video controls width="100%" height="400px">
-          <source src="your_video_url.mp4" type="video/mp4">
+          <source v-if="videoUrl" :src="videoUrl" type="video/mp4">
         </video>
         <el-form>
-          <el-form-item class="video-btn" label="标题" />
-          <el-form-item class="video-btn" label="源时间" />
+          <el-form-item class="video-btn" :label="'标题: ' + videoTitle" />
+          <el-form-item class="video-btn" :label="'源时间: ' + sourceTime" />
+
         </el-form></el-col>
 
       <!-- 右半部分：标题、发生地和确认上传按钮 -->
       <el-col :span="9">
         <el-form label-width="100px">
-          <el-form-item class="video-btn" label="标题">
+          <el-form-item class="video-btn" label="标题*">
             <el-input v-model="videoTitle" />
           </el-form-item>
-          <el-form-item class="video-btn" width="230">
-            <el-button class="video-btn video-btn-row" type="primary" @click="handleDisasterType">灾害类型</el-button>
-            <el-button class="video-btn video-btn-row" type="primary" @click="handleScene">场景</el-button>
-            <el-button class="video-btn video-btn-row" type="primary" @click="handleEmergencyLevel">紧急程度</el-button>
+          <el-form-item class="video-btn" label="灾害类型">
+            <el-select v-model="selectedDisasterType" placeholder="请选择" class="center-placeholder">
+              <el-option label="地震" value="earthquake" />
+              <el-option label="洪水" value="flood" />
+              <el-option label="火灾" value="fire" />
+            </el-select>
+          </el-form-item>
+          <el-form-item label="场景" class="video-btn">
+            <el-select v-model="selectedScene" placeholder="请选择" class="center-placeholder">
+              <el-option label="城市" value="city" />
+              <el-option label="农村" value="village" />
+              <el-option label="森林" value="forest" />
+            </el-select>
+          </el-form-item>
+          <el-form-item label="紧急程度" class="video-btn">
+            <el-select v-model="selectedEmergencyLevel" placeholder="请选择" class="center-placeholder">
+              <el-option label="低" value="low" />
+              <el-option label="中" value="medium" />
+              <el-option label="高" value="high" />
+            </el-select>
           </el-form-item>
           <el-form-item class="video-btn" label="信息内容">
-            <el-input v-model="videoLocation" />
+            <el-input v-model="videoMessage" />
           </el-form-item>
           <el-form-item class="video-btn" label="标志物信息">
+            <el-input v-model="markerInfo" />
+          </el-form-item>
+          <el-form-item class="video-btn" label="源时间*">
+            <el-input v-model="sourceTime" />
+          </el-form-item>
+          <el-form-item class="video-btn" label="发生地*">
             <el-input v-model="videoLocation" />
           </el-form-item>
-          <el-form-item class="video-btn" label="源时间">
-            <el-input v-model="videoLocation" />
+          <el-form-item class="video-btn" label="搜集时间*">
+            <el-input v-model="collectionTime" />
           </el-form-item>
-          <el-form-item class="video-btn" label="发生地">
-            <el-input v-model="videoLocation" />
-          </el-form-item>
-          <el-form-item class="video-btn" label="搜集时间">
-            <el-input v-model="videoLocation" />
-          </el-form-item>
-          <el-form-item class="video-btn" label="搜集时间">
-            <el-input v-model="videoLocation" />
+          <el-form-item class="video-btn" label="信息源*">
+            <el-input v-model="informationSource" />
           </el-form-item>
           <el-form-item class="video-btn" label="url">
-            <el-input v-model="videoLocation" />
+            <el-input v-model="videoUrl" />
           </el-form-item>
-          <el-form-item class="video-btn" label="搜集人">
-            <el-input v-model="videoLocation" />
+          <el-form-item class="video-btn" label="搜集人*">
+            <el-input v-model="collector" />
           </el-form-item>
+
           <el-form-item>
             <el-button class="video-btn" type="primary" @click="uploadVideo">确认上传</el-button>
           </el-form-item>
@@ -60,22 +78,74 @@
 export default {
   data() {
     return {
+      isSignedIn: false,
+      workHoursToday: 0,
+      contributionToday: {
+        uploads: 0,
+        reviews: 0
+      },
+      contributionWeek: {
+        uploads: 0,
+        reviews: 0
+      },
+      videoUrl: '',
+      selectedDisasterType: '',
+      selectedScene: '',
+      selectedEmergencyLevel: '',
+      videoMessage: '',
       videoTitle: '',
-      videoLocation: ''
+      videoLocation: '',
+      sourceTime: '',
+      collectionTime: '',
+      collector: '',
+      markerInfo: '', // 标志物信息
+      informationSource: '' // 信息源
     }
   },
+  created() {
+    this.videoUrl = this.$route.query.videoUrl
+  },
   methods: {
+    toggleSignIn() {
+      this.isSignedIn = !this.isSignedIn
+    },
     uploadVideo() {
+      if (!this.videoTitle || !this.selectedDisasterType || !this.videoLocation || !this.sourceTime || !this.collectionTime || !this.collector) {
+        this.$message.error('请填写所有必填项')
+        return
+      }
       // 处理上传逻辑，例如发送数据到后端
       console.log('标题：', this.videoTitle)
+      console.log('灾害类型：', this.selectedDisasterType)
+      console.log('场景：', this.selectedScene)
+      console.log('紧急程度：', this.selectedEmergencyLevel)
+      console.log('信息内容：', this.videoMessage)
+      console.log('源时间：', this.sourceTime)
       console.log('发生地：', this.videoLocation)
+      console.log('搜集时间：', this.collectionTime)
+      console.log('搜集人：', this.collector)
       // 在这里添加上传视频的操作
+    },
+    handleDisasterType() {
+      // 处理灾害类型选择逻辑
+      console.log(this.selectedDisasterType)
+    },
+    handleScene() {
+      // 处理场景选择逻辑
+      console.log(this.selectedScene)
+    },
+    handleEmergencyLevel() {
+      // 处理紧急程度选择逻辑
+      console.log(this.selectedEmergencyLevel)
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+.center-placeholder .el-input__inner {
+  text-align: center;
+}
 .video-upload-page {
 
   display: flex;

@@ -7,10 +7,10 @@ Vue.use(Router)
 import Layout from '@/layout'
 
 /* Router Modules */
-/* import componentsRouter from './modules/components'
+import componentsRouter from './modules/components'
 import chartsRouter from './modules/charts'
 import tableRouter from './modules/table'
-import nestedRouter from './modules/nested'*/
+import nestedRouter from './modules/nested'
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -83,7 +83,7 @@ export const constantRoutes = [
       }
     ]
   },
-  /* {
+  {
     path: '/documentation',
     component: Layout,
     children: [
@@ -107,7 +107,7 @@ export const constantRoutes = [
         meta: { title: 'guide', icon: 'guide', noCache: true }
       }
     ]
-  },*/
+  },
   {
     path: '/profile',
     component: Layout,
@@ -129,7 +129,7 @@ export const constantRoutes = [
  * the routes that need to be dynamically loaded based on user roles
  */
 export const asyncRoutes = [
-  /* {
+  {
     path: '/permission',
     component: Layout,
     redirect: '/permission/page',
@@ -182,14 +182,14 @@ export const asyncRoutes = [
         meta: { title: 'icons', icon: 'icon', noCache: true }
       }
     ]
-  },*/
+  },
 
   /** when your routing map is too long, you can split it into small modules **/
-  /* componentsRouter,
+  componentsRouter,
   chartsRouter,
   nestedRouter,
-  tableRouter,*/
-  /*
+  tableRouter,
+
   {
     path: '/example',
     component: Layout,
@@ -273,7 +273,7 @@ export const asyncRoutes = [
     ]
   },
 
-   {
+  {
     path: '/excel',
     component: Layout,
     redirect: '/excel/export-excel',
@@ -357,7 +357,7 @@ export const asyncRoutes = [
         meta: { title: 'theme', icon: 'theme' }
       }
     ]
-  },*/
+  },
 
   {
     path: '/videoload',
@@ -372,6 +372,18 @@ export const asyncRoutes = [
     ]
   },
 
+  {
+    path: '/volunteer',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/volunteer/index'),
+        name: 'volunteer',
+        meta: { title: 'volunteer' }
+      }
+    ]
+  },
   {
     path: '/datalab',
     component: Layout,
@@ -436,7 +448,7 @@ export const asyncRoutes = [
     ]
   },
 
-  /* {
+  {
     path: '/clipboard',
     component: Layout,
     children: [
@@ -471,7 +483,7 @@ export const asyncRoutes = [
         meta: { title: 'externalLink', icon: 'link' }
       }
     ]
-  },*/
+  },
 
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }

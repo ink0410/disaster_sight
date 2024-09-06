@@ -10,8 +10,10 @@
           <div class="video-upload">
             <el-upload
               class="upload-demo"
-              action="/your-upload-api"
-              :on-success="handleUploadSuccess"
+              action="#"
+              :before-upload="beforeUploadVideo"
+              :on-change="handleVideoChange"
+              :show-file-list="false"
             >
               <el-button size="small" type="primary">
                 <i class="el-icon-upload" /> 点击上传视频
@@ -45,17 +47,35 @@
 export default {
   data() {
     return {
-      videoUrl: ''
+      videoUrl: null
     }
   },
   methods: {
-    handleUploadSuccess(response) {
-      // 处理上传成功后的逻辑
-      console.log('上传成功', response)
+    beforeUploadVideo(file) {
+      const isVideo = file.type.startsWith('video/')
+      const isLt50M = file.size / 1024 / 1024 < 50
+
+      if (!isVideo) {
+        this.$message.error('请上传正确的视频格式')
+        return false
+      }
+      if (!isLt50M) {
+        this.$message.error('视频大小不能超过50MB')
+        return false
+      }
+      return true
+    },
+    handleVideoChange(file) {
+      const videoFile = file.raw
+      this.videoUrl = URL.createObjectURL(videoFile)
     },
     handlePasteUrl() {
       // 处理粘贴 URL 后的逻辑
       console.log('粘贴的 URL：', this.videoUrl)
+      this.$router.push({
+        path: '/videoload/index',
+        query: { videoUrl: this.videoUrl }
+      })
     }
   }
 }
