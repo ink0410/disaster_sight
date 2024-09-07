@@ -64,6 +64,12 @@
           <el-form-item class="video-btn" label="搜集人*">
             <el-input v-model="collector" />
           </el-form-item>
+          <el-form-item class="video-btn" label="水位深度">
+            <div class="input-group">
+              <el-input v-model="depth" />
+              <el-button class="small-btn" type="primary" @click="uploadVideo">智能识别</el-button>
+            </div>
+          </el-form-item>
 
           <el-form-item>
             <el-button class="video-btn" type="primary" @click="uploadVideo">确认上传</el-button>
@@ -99,7 +105,8 @@ export default {
       collectionTime: '',
       collector: '',
       markerInfo: '', // 标志物信息
-      informationSource: '' // 信息源
+      informationSource: '', // 信息源
+      depth: ''
     }
   },
   created() {
@@ -137,6 +144,9 @@ export default {
     handleEmergencyLevel() {
       // 处理紧急程度选择逻辑
       console.log(this.selectedEmergencyLevel)
+    },
+    handleWaterDepth() {
+      console.log(this.depth)
     }
   }
 }
@@ -164,6 +174,15 @@ export default {
       height: 40px;
       align-items: center;
     }
+  }
+  .input-group {
+  display: flex;
+  align-items: center;
+  }
+
+  .small-btn {
+  margin-left: 10px; /* 调整按钮与输入框的间距 */
+  padding: 5px 10px; /* 调整按钮的大小 */
   }
 }
 
