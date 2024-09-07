@@ -6,11 +6,11 @@ Vue.use(Router)
 /* Layout */
 import Layout from '@/layout'
 
-/* Router Modules */
+/* Router Modules
 import componentsRouter from './modules/components'
 import chartsRouter from './modules/charts'
 import tableRouter from './modules/table'
-import nestedRouter from './modules/nested'
+import nestedRouter from './modules/nested'*/
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -82,8 +82,8 @@ export const constantRoutes = [
         meta: { title: 'dashboard', icon: 'dashboard', affix: true }
       }
     ]
-  },
-  {
+  }
+  /* {
     path: '/documentation',
     component: Layout,
     children: [
@@ -108,7 +108,6 @@ export const constantRoutes = [
       }
     ]
   },
-  },
   {
     path: '/profile',
     component: Layout,
@@ -122,15 +121,16 @@ export const constantRoutes = [
         meta: { title: 'profile', icon: 'user', noCache: true }
       }
     ]
-  }
+  } */
 ]
 
 /**
  * asyncRoutes
  * the routes that need to be dynamically loaded based on user roles
  */
+
 export const asyncRoutes = [
-  {
+  /* {
     path: '/permission',
     component: Layout,
     redirect: '/permission/page',
@@ -171,8 +171,96 @@ export const asyncRoutes = [
       }
     ]
   },
+  {
+    path: '/videoload',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/videoload/index'),
+        name: 'videoload',
+        meta: { title: 'videoload' }
+      }
+    ]
+  }, */
 
   {
+    path: '/floodmap',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/floodmap/index'),
+        name: 'floodmap',
+        meta: { title: 'floodmap' }
+      }
+    ]
+  },
+  {
+    path: '/videoloader',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/videoloader/index'),
+        name: 'videoloader',
+        meta: { title: 'videoloader' }
+      }
+    ]
+  },
+  {
+    path: '/videoload',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/videoload/index'),
+        name: 'videoload',
+        meta: { title: 'videoload' },
+        hidden: true
+      }
+    ]
+  },
+  {
+    path: '/videolab',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/videolab/index'),
+        name: 'videolab',
+        meta: { title: 'videolab' }
+      }
+    ]
+  },
+
+  {
+    path: '/tasklab',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/tasklab/index'),
+        name: 'tasklab',
+        meta: { title: 'tasklab' }
+      }
+    ]
+  },
+
+  {
+    path: '/datalab',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/datalab/index'),
+        name: 'datalab',
+        meta: { title: 'datalab' }
+      }
+    ]
+  },
+
+  /* {
     path: '/icon',
     component: Layout,
     children: [
@@ -184,18 +272,13 @@ export const asyncRoutes = [
       }
     ]
   },
-  },
 
-  /** when your routing map is too long, you can split it into small modules **/
-  componentsRouter,
   componentsRouter,
   chartsRouter,
   nestedRouter,
   tableRouter,
 
-  tableRouter,
-
-  {
+   {
     path: '/example',
     component: Layout,
     redirect: '/example/list',
@@ -365,95 +448,6 @@ export const asyncRoutes = [
   },
 
   {
-    path: '/videoload',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/videoload/index'),
-        name: 'videoload',
-        meta: { title: 'videoload' }
-      }
-    ]
-  },
-
-  {
-    path: '/volunteer',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/volunteer/index'),
-        name: 'volunteer',
-        meta: { title: 'volunteer' }
-      }
-    ]
-  },
-  {
-    path: '/datalab',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/datalab/index'),
-        name: 'datalab',
-        meta: { title: 'datalab' }
-      }
-    ]
-  },
-
-  {
-    path: '/tasklab',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/tasklab/index'),
-        name: 'tasklab',
-        meta: { title: 'tasklab' }
-      }
-    ]
-  },
-
-  {
-    path: '/floodmap',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/floodmap/index'),
-        name: 'floodmap',
-        meta: { title: 'floodmap' }
-      }
-    ]
-  },
-
-  {
-    path: '/videolab',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/videolab/index'),
-        name: 'videolab',
-        meta: { title: 'videolab' }
-      }
-    ]
-  },
-  {
-    path: '/videoloader',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/videoloader/index'),
-        name: 'videoloader',
-        meta: { title: 'videoloader' }
-      }
-    ]
-  },
-
-  {
     path: '/clipboard',
     component: Layout,
     children: [
@@ -488,8 +482,7 @@ export const asyncRoutes = [
         meta: { title: 'externalLink', icon: 'link' }
       }
     ]
-  },
-  },
+  }, */
 
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }

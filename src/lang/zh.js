@@ -1,6 +1,11 @@
 export default {
   route: {
     dashboard: '首页',
+    floodmap: '灾情地图',
+    videoloader: '视频上传',
+    datalab: '数据盘点',
+    tasklab: '任务池',
+    videolab: '视频库',
     documentation: '文档',
     guide: '引导页',
     permission: '权限测试页',

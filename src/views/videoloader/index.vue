@@ -44,6 +44,7 @@
 </template>
 
 <script>
+
 export default {
   data() {
     return {
@@ -68,6 +69,10 @@ export default {
     handleVideoChange(file) {
       const videoFile = file.raw
       this.videoUrl = URL.createObjectURL(videoFile)
+      this.$router.push({
+        path: '/videoload/index',
+        query: { videoUrl: this.videoUrl }
+      })
     },
     handlePasteUrl() {
       // 处理粘贴 URL 后的逻辑

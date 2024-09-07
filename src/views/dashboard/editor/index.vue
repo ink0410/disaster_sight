@@ -1,74 +1,100 @@
 <template>
-  <div class="dashboard-editor-container">
-    <div class=" clearfix">
-      <pan-thumb :image="avatar" style="float: left">
-        Your roles:
-        <span v-for="item in roles" :key="item" class="pan-info-roles">{{ item }}</span>
-      </pan-thumb>
-      <github-corner style="position: absolute; top: 0px; border: 0; right: 0;" />
-      <div class="info-container">
-        <span class="display_name">{{ name }}</span>
-        <span style="font-size:20px;padding-top:20px;display:inline-block;">Editor's Dashboard</span>
+  <div class="dashboard-container">
+    <!-- 左侧部分 -->
+    <div class="left-section">
+      <!-- 签到/签退按钮 -->
+      <el-button type="primary" class="sign-button" @click="toggleSignIn">{{ isSignedIn ? '签退' : '签到' }}</el-button>
+
+      <!-- 提示文字 -->
+      <div class="footer-text">
+        救灾任务紧急，但也别忘记照顾自己哦~
       </div>
     </div>
-    <div>
-      <img :src="emptyGif" class="emptyGif">
+
+    <!-- 右侧部分 -->
+    <div class="right-section">
+      <el-card>
+        <p>今日在岗时长: </p>
+        <p>{{ todayWorkHours }} 小时</p>
+      </el-card>
+      <el-card>
+        <p>今日贡献值: </p>
+        <p>上传: {{ todayUpload }} </p>
+        <p>审核: {{ todayReview }}</p>
+      </el-card>
+      <el-card>
+        <p>本周贡献值: </p>
+        <p>上传: {{ todayUpload }} </p>
+        <p>审核: {{ todayReview }}</p>
+
+      </el-card>
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import PanThumb from '@/components/PanThumb'
-import GithubCorner from '@/components/GithubCorner'
-
 export default {
-  name: 'DashboardEditor',
-  components: { PanThumb, GithubCorner },
   data() {
     return {
-      emptyGif: 'https://wpimg.wallstcn.com/0e03b7da-db9e-4819-ba10-9016ddfdaed3'
+      isSignedIn: false, // 签到状态
+      todayWorkHours: 8, // 示例数据
+      todayUpload: 5,
+      todayReview: 3,
+      weekUpload: 20,
+      weekReview: 15
     }
   },
-  computed: {
-    ...mapGetters([
-      'name',
-      'avatar',
-      'roles'
-    ])
+  methods: {
+    toggleSignIn() {
+      this.isSignedIn = !this.isSignedIn
+      this.$message.success(this.isSignedIn ? '签到成功！' : '签退成功！')
+    }
   }
 }
 </script>
 
-<style lang="scss" scoped>
-  .emptyGif {
-    display: block;
-    width: 45%;
-    margin: 0 auto;
-  }
+<style scoped>
+.dashboard-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100vh;
+  padding: 20px;
+}
 
-  .dashboard-editor-container {
-    background-color: #e3e3e3;
-    min-height: 100vh;
-    padding: 50px 60px 0px;
-    .pan-info-roles {
-      font-size: 12px;
-      font-weight: 700;
-      color: #333;
-      display: block;
-    }
-    .info-container {
-      position: relative;
-      margin-left: 190px;
-      height: 150px;
-      line-height: 200px;
-      .display_name {
-        font-size: 48px;
-        line-height: 48px;
-        color: #212121;
-        position: absolute;
-        top: 25px;
-      }
-    }
-  }
+.left-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.sign-button {
+  margin-bottom: 150px;
+  align-items: center;
+  margin-left: 150px
+}
+
+.footer-text {
+  font-size: 14px;
+  color: #666;
+  margin-left: 100px
+}
+
+.right-section {
+  width: 300px;
+}
+
+.el-card {
+  text-align: center;
+  margin-bottom: 30px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.el-card p {
+  margin: 10px 0;
+  font-size: 16px;
+  color: #333;
+}
 </style>
