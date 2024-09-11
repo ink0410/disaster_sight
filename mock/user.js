@@ -1,10 +1,13 @@
-
 const tokens = {
   admin: {
     token: 'admin-token'
   },
   editor: {
     token: 'editor-token'
+  },
+  // 添加新用户
+  '18131992190': {
+    token: 'new-admin-token' // 为新用户生成一个唯一的token
   }
 }
 
@@ -20,9 +23,17 @@ const users = {
     introduction: 'I am an editor',
     avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
     name: 'Normal Editor'
+  },
+  // 添加新用户的详细信息
+  'new-admin-token': {
+    roles: ['admin'], // 将角色设置为admin
+    introduction: 'I am a new administrator',
+    avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
+    name: 'New Admin'
   }
 }
 
+// 以下是你的mock数据
 module.exports = [
   // user login
   {
