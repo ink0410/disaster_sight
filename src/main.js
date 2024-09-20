@@ -30,7 +30,7 @@ import * as filters from './filters' // global filters
  */
 
 import axios from 'axios'
-axios.defaults.baseURL = 'http://127.0.0.1:3389'
+axios.defaults.baseURL = 'http://127.0.0.1:5000'
 Vue.prototype.$ajax = axios
 
 /* if (process.env.NODE_ENV === 'production') {

@@ -53,20 +53,7 @@
       </el-button>
 
       <div style="position:relative">
-        <div class="tips">
-          <span>{{ $t('login.username') }} : admin</span>
-          <span>{{ $t('login.password') }} : {{ $t('login.any') }}</span>
-        </div>
-        <div class="tips">
-          <span style="margin-right:18px;">
-            {{ $t('login.username') }} : editor
-          </span>
-          <span>{{ $t('login.password') }} : {{ $t('login.any') }}</span>
-        </div>
-
-        <el-button class="thirdparty-button" type="primary" @click="showDialog=true">
-          {{ $t('login.thirdparty') }}
-        </el-button>
+        <el-button :loading="loading" type="text" @click="$router.push('/register')">没有账户？前往注册</el-button>
       </div>
     </el-form>
 
@@ -187,6 +174,8 @@ export default {
         return acc
       }, {})
     }
+
+  // ..
     // afterQRScan() {
     //   if (e.key === 'x-admin-oauth-code') {
     //     const code = getQueryObject(e.newValue)

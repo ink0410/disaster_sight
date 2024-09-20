@@ -13,7 +13,10 @@
               action="#"
               :before-upload="beforeUploadVideo"
               :on-change="handleVideoChange"
-              :show-file-list="false"
+              :show-file-list="true"
+              drag
+              multiple
+              :accept="'video/*'"
             >
               <el-button size="small" type="primary">
                 <i class="el-icon-upload" /> 点击上传视频
@@ -44,10 +47,11 @@
 </template>
 
 <script>
-
+import axios from 'axios'
 export default {
   data() {
     return {
+      uploadedFiles: [],
       videoUrl: null
     }
   },
@@ -67,20 +71,53 @@ export default {
       return true
     },
     handleVideoChange(file) {
-      const videoFile = file.raw
-      this.videoUrl = URL.createObjectURL(videoFile)
-      this.$router.push({
-        path: '/videoload/index',
-        query: { videoUrl: this.videoUrl }
+      // 检查文件是否已经存在
+      const fileExists = this.uploadedFiles.some(uploadedFile => {
+        // 输出已上传文件的名字
+        return uploadedFile.name === file.name && uploadedFile.size === file.size
       })
+
+      if (!fileExists) {
+        const videoFile = file.raw
+        this.videoUrl = URL.createObjectURL(videoFile)
+        this.uploadedFiles.push(file.raw)
+        const data = {
+          video_stored_path: JSON.stringify(this.videoUrl)// 确保发送的是 JSON 字符串
+        }
+        axios.post('/videos/', data)
+          .then(response => {
+            this.video_id = response.data.video.video_id
+            this.$router.push({
+              path: '/videoload/index',
+              query: { videoUrl: this.videoUrl, video_id: this.video_id }
+            })
+          })
+          .catch(error => {
+            console.error('上传失败:', error)
+            this.$message.error('上传失败')
+          })
+      } else {
+        console.log('文件已存在，不再重复上传')
+      }
     },
     handlePasteUrl() {
       // 处理粘贴 URL 后的逻辑
       console.log('粘贴的 URL：', this.videoUrl)
-      this.$router.push({
-        path: '/videoload/index',
-        query: { videoUrl: this.videoUrl }
-      })
+      const data = {
+        video_stored_path: JSON.stringify(this.videoUrl)// 确保发送的是 JSON 字符串
+      }
+      axios.post('/videos/', data)
+        .then(response => {
+          console.log('上传成功:', response.data)
+          this.$router.push({
+            path: '/videoload/index',
+            query: { videoUrl: this.videoUrl }
+          })
+        })
+        .catch(error => {
+          console.error('上传失败:', error)
+          this.$message.error('上传失败')
+        })
     }
   }
 }

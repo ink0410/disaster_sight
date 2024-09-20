@@ -61,6 +61,12 @@ export const constantRoutes = [
     hidden: true
   },
   {
+    path: '/register',
+    name: 'register',
+    component: () => import('@/views/register/index'),
+    hidden: true
+  },
+  {
     path: '/404',
     component: () => import('@/views/error-page/404'),
     hidden: true
@@ -196,6 +202,7 @@ export const asyncRoutes = [
       }
     ]
   },
+
   {
     path: '/videoloader',
     component: Layout,
