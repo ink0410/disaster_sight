@@ -27,28 +27,29 @@ def get_videoInformation_by_id(video_id):
     return make_response(jsonify({"videoInformation": videoInformation_schema.dump(videoInformation)}))
 
 
-# Insert 操作
 @videoInformation_bp.route('/upload', methods=['POST'])
 def create_videoInformation():
     try:
         data = request.get_json()
-        print(data)
+        print("原始数据:", data)
+        print("原始 create_time:", data['create_time'])
+        
         try:
             dt = datetime.strptime(data['create_time'], '%Y-%m-%dT%H:%M:%S.%fZ').replace(tzinfo=None)
             data['create_time'] = dt
-            print("转换后的 create_time:", data['create_time'])
-            print("更新后的 data:", data)
         except ValueError as e:
-            return jsonify({"message": "Invalid datetime format"}), 422 
-        print(data)
+            print("日期时间格式错误:", e)
+            return make_response(jsonify({"message": "Invalid datetime format"}), 422)
+        
+        print("转换后的 create_time:", data['create_time'])
+        print("更新后的 data:", data)
+        
         videoInformation_schema = VideoInformationSchema()
-     #(f"Data before loading into schema: {data}")  # 打印加载到 schema 之前的数据
         videoInformation = videoInformation_schema.load(data, session=db.session)
-     #print(f"Data after loading into schema: {videoInformation}")  # 打印加载到 schema 之后的数据
         db.session.add(videoInformation)
         db.session.commit()
-        return response_with(resp.SUCCESS_200,value={"videoInformation": videoInformation_schema.dump(videoInformation)})
-
+        return response_with(resp.SUCCESS_200, value={"videoInformation": videoInformation_schema.dump(videoInformation)})
+    
     except IntegrityError as e:
         db.session.rollback()
         return make_response(jsonify({"message": "Integrity error occurred"}), 422)
@@ -56,6 +57,7 @@ def create_videoInformation():
         db.session.rollback()
         print(e)
         return make_response(jsonify({"message": "Invalid input"}), 422)
+
 
 # Update 操作
 @videoInformation_bp.route('/<int:video_id>', methods=['PUT'])

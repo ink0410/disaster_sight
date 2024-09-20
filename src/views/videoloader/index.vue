@@ -108,10 +108,10 @@ export default {
       }
       axios.post('/videos/', data)
         .then(response => {
-          console.log('上传成功:', response.data)
+          this.video_id = response.data.video.video_id
           this.$router.push({
             path: '/videoload/index',
-            query: { videoUrl: this.videoUrl }
+            query: { videoUrl: this.videoUrl, video_id: this.video_id }
           })
         })
         .catch(error => {
