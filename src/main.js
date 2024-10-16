@@ -28,10 +28,19 @@ import * as filters from './filters' // global filters
  * Currently MockJs will be used in the production environment,
  * please remove it before going online ! ! !
  */
-
+import VueAMap from 'vue-amap'
 import axios from 'axios'
 axios.defaults.baseURL = 'http://127.0.0.1:5000'
 Vue.prototype.$ajax = axios
+
+Vue.use(VueAMap)
+VueAMap.initAMapApiLoader({
+// 输入自己申请的key值
+  key: '7b590c52e8b07878feabed9f570a1ea3',
+  plugin: ['AMap.Autocomplete', 'AMap.PlaceSearch', 'AMap.Scale', 'AMap.OverView', 'AMap.ToolBar', 'AMap.MapType', 'AMap.PolyEditor', 'AMap.CircleEditor'],
+  // 默认高德 sdk 版本为 1.4.4
+  v: '1.4.4'
+})
 
 /* if (process.env.NODE_ENV === 'production') {
   const { mockXHR } = require('../mock')
